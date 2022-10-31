@@ -47,13 +47,13 @@ class LoginScreen extends StatelessWidget {
                   CustomInputField(
                     formProperty: "email",
                     formValues: formValues,
-                    hintText: "Correo Electronico",
+                    labelText: "Correo Electronico",
                   ),
                   const SizedBox(height: 15),
                   CustomInputField(
                     formProperty: "password",
                     formValues: formValues,
-                    hintText: "Contraseña",
+                    labelText: "Contraseña",
                     obscureText: true,
                   ),
                   const SizedBox(height: 20),

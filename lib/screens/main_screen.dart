@@ -56,60 +56,61 @@ class MainScreen extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Scrollbar(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 100,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 100,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100),
+              child: Text(
+                "Hojas de vida registradas",
+                style: TextStyle(color: Colors.white, fontSize: 22),
+                textAlign: TextAlign.start,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 100),
-                child: Text(
-                  "Hojas de vida registradas",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                  textAlign: TextAlign.start,
-                ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 100),
+              child: Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'details',
+                            arguments: const CvDetailArgument(
+                                cv: null, editable: true, flow: 3));
+                      },
+                      child: const Text("Agregar")),
+                ],
               ),
-              const SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, 'details',
-                              arguments: const CvDetailArgument(
-                                  cv: null, editable: true, flow: 3));
-                        },
-                        child: const Text("Agregar")),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Expanded(
-                child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 100),
-                    itemBuilder: (context, index) {
-                      return CvItem(
-                        cv: cvProvider.cvList[index],
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Divider(
-                          color: Colors.white,
-                        ),
-                      );
-                    },
-                    itemCount: cvProvider.cvList.length),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Expanded(
+              child: ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
+                  itemBuilder: (context, index) {
+                    return CvItem(
+                      cv: cvProvider.cvList[index],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Divider(
+                        color: Colors.white,
+                      ),
+                    );
+                  },
+                  itemCount: cvProvider.cvList.length),
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+          ],
         ),
       ),
     );
@@ -187,6 +188,9 @@ class CvItem extends StatelessWidget {
             ),
           ],
         )),
+        const SizedBox(
+          height: 50,
+        ),
       ],
     );
   }

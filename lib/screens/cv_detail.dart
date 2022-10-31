@@ -87,11 +87,11 @@ class CvDetailScreen extends StatelessWidget {
                   child: const Text("Salir")))
         ],
       ),
-      body: Center(
-        child: Form(
-          key: myFormKey,
-          onChanged: () {},
-          child: Scrollbar(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Form(
+            key: myFormKey,
+            onChanged: () {},
             child: Column(
               children: [
                 const SizedBox(
@@ -528,6 +528,9 @@ class CvDetailScreen extends StatelessWidget {
                         child: const Text("Volver")),
                   )
                 ],
+                const SizedBox(
+                  height: 100,
+                ),
               ],
             ),
           ),

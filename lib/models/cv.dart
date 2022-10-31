@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:eva/models/assigned_company.dart';
+
 class Cv {
   Cv({
-    required this.id,
+    this.id,
     required this.name,
     required this.email,
     required this.docType,
@@ -18,17 +20,18 @@ class Cv {
     required this.pensionFund,
     required this.maritalStatus,
     required this.additionalInfo,
-    required this.v,
-    required this.available,
+    this.available,
+    this.assignedCompany,
+    this.assignedCompanyId,
   });
 
-  String id;
+  String? id;
   String name;
   String email;
   String docType;
   int docNumber;
   int phone;
-  DateTime bornDate;
+  String bornDate;
   String profession;
   String educationLevel;
   String state;
@@ -38,8 +41,9 @@ class Cv {
   String pensionFund;
   String maritalStatus;
   String additionalInfo;
-  int v;
-  bool available;
+  String? assignedCompanyId;
+  bool? available;
+  AssignedCompany? assignedCompany;
 
   factory Cv.fromJson(String str) => Cv.fromMap(json.decode(str));
 
@@ -50,7 +54,7 @@ class Cv {
         docType: json["doc_type"],
         docNumber: json["doc_number"],
         phone: json["phone"],
-        bornDate: DateTime.parse(json["born_date"]),
+        bornDate: json["born_date"],
         profession: json["profession"],
         educationLevel: json["education_level"],
         state: json["state"],
@@ -60,7 +64,9 @@ class Cv {
         pensionFund: json["pension_fund"],
         maritalStatus: json["marital_status"],
         additionalInfo: json["additional_info"],
-        v: json["__v"],
-        available: json["available"],
+        available: json["available"] ?? true,
+        assignedCompany: json["assigned_company"] == null
+            ? null
+            : AssignedCompany.fromMap(json["assigned_company"]),
       );
 }

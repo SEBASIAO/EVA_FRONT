@@ -1,3 +1,4 @@
+import 'package:eva/providers/company_provider.dart';
 import 'package:eva/providers/cv_provider.dart';
 import 'package:eva/providers/login_provider.dart';
 import 'package:eva/screens/screens.dart';
@@ -14,6 +15,7 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CvProvider()),
         ChangeNotifierProvider(create: (_) => LoginProvider()),
+        ChangeNotifierProvider(create: (_) => CompanyProvider()),
       ],
       child: MyApp(),
     );
@@ -32,6 +34,9 @@ class MyApp extends StatelessWidget {
         'login': (context) => LoginScreen(),
         'main': (context) => MainScreen(),
         'details': (context) => CvDetailScreen(),
+        'companies': (context) => CompaniesScreen(),
+        'companyDetail': (context) => CompanyDetail(),
+        'register': (context) => RegisterUserScreen(),
       },
       theme: AppTheme.lightTheme,
     );

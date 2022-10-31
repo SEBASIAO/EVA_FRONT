@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:eva/models/user.dart';
+
 class LoginResponse {
   LoginResponse({
     required this.status,
@@ -7,7 +9,7 @@ class LoginResponse {
   });
 
   int status;
-  dynamic user;
+  User? user;
 
   factory LoginResponse.fromJson(String str) =>
       LoginResponse.fromMap(json.decode(str));
@@ -16,7 +18,7 @@ class LoginResponse {
 
   factory LoginResponse.fromMap(Map<String, dynamic> json) => LoginResponse(
         status: json["status"],
-        user: json["user"],
+        user: json["user"] == null ? null : User.fromMap(json["user"]),
       );
 
   Map<String, dynamic> toMap() => {

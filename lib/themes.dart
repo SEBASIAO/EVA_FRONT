@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final blackColor = Color.fromRGBO(28, 29, 38, 1);
+  static final blackLightColor = Color.fromARGB(255, 55, 57, 75);
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     appBarTheme: AppBarTheme(
         backgroundColor: blackColor,

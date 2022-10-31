@@ -1,17 +1,18 @@
-import 'package:eva/models/cv.dart';
+import 'package:eva/models/company.dart';
+import 'package:eva/providers/company_provider.dart';
 import 'package:eva/providers/cookie_manager.dart';
-import 'package:eva/providers/cv_provider.dart';
 import 'package:eva/providers/login_provider.dart';
 import 'package:eva/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class CompaniesScreen extends StatelessWidget {
+  const CompaniesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final cvProvider = Provider.of<CvProvider>(context, listen: true);
+    final companiesProvider =
+        Provider.of<CompanyProvider>(context, listen: true);
     final loginProvider = Provider.of<LoginProvider>(context, listen: true);
     final cookie = CookieManager.getCookie("isAdmin");
     return Scaffold(
@@ -65,7 +66,7 @@ class MainScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 100),
                 child: Text(
-                  "Hojas de vida registradas",
+                  "Empresas registradas",
                   style: TextStyle(color: Colors.white, fontSize: 22),
                   textAlign: TextAlign.start,
                 ),
@@ -79,9 +80,9 @@ class MainScreen extends StatelessWidget {
                   children: [
                     ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, 'details',
-                              arguments: const CvDetailArgument(
-                                  cv: null, editable: true, flow: 3));
+                          Navigator.pushNamed(context, 'companyDetail',
+                              arguments: const CompanyDetailArgument(
+                                  company: null, editable: true, flow: 3));
                         },
                         child: const Text("Agregar")),
                   ],
@@ -94,8 +95,8 @@ class MainScreen extends StatelessWidget {
                 child: ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: 100),
                     itemBuilder: (context, index) {
-                      return CvItem(
-                        cv: cvProvider.cvList[index],
+                      return CompanyItem(
+                        company: companiesProvider.companies[index],
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -106,7 +107,7 @@ class MainScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    itemCount: cvProvider.cvList.length),
+                    itemCount: companiesProvider.companies.length),
               ),
             ],
           ),
@@ -116,29 +117,13 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-class CvItem extends StatelessWidget {
-  const CvItem({
+class CompanyItem extends StatelessWidget {
+  const CompanyItem({
     Key? key,
-    required this.cv,
+    required this.company,
   }) : super(key: key);
 
-  final Cv cv;
-
-  Text _getAvailableText(bool available) {
-    var color = Colors.greenAccent;
-    var text = "Disponible";
-    if (available == false) {
-      color = Colors.redAccent;
-      text = "No disponible";
-    }
-    return Text(
-      text,
-      style: TextStyle(
-        color: color,
-        fontSize: 22,
-      ),
-    );
-  }
+  final Company company;
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +132,7 @@ class CvItem extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            cv.name,
+            company.name,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 22,
@@ -156,7 +141,7 @@ class CvItem extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            cv.profession,
+            'Nit ${company.nit}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 22,
@@ -164,24 +149,21 @@ class CvItem extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: _getAvailableText(cv.available ?? true),
-        ),
-        Expanded(
             child: Row(
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'details',
-                    arguments:
-                        CvDetailArgument(cv: cv, editable: false, flow: 1));
+                Navigator.pushNamed(context, 'companyDetail',
+                    arguments: CompanyDetailArgument(
+                        company: company, editable: false, flow: 1));
               },
               child: const Text("Consultar"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'details',
-                    arguments:
-                        CvDetailArgument(cv: cv, editable: true, flow: 2));
+                Navigator.pushNamed(context, 'companyDetail',
+                    arguments: CompanyDetailArgument(
+                        company: company, editable: true, flow: 2));
               },
               child: const Text("Modificar"),
             ),
@@ -192,14 +174,14 @@ class CvItem extends StatelessWidget {
   }
 }
 
-class CvDetailArgument {
-  const CvDetailArgument({
-    required this.cv,
+class CompanyDetailArgument {
+  const CompanyDetailArgument({
+    required this.company,
     required this.editable,
     required this.flow,
   });
 
-  final Cv? cv;
+  final Company? company;
   final bool editable;
   final int flow;
 }
